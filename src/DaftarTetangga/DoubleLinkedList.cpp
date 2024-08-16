@@ -54,9 +54,30 @@ public:
       vertexMap[w]->Neighbors.remove(v);
     }
   }
+
+  void display()
+  {
+    Node *current = head;
+    while (current)
+    {
+      cout << "Vertex " << current->vertex << " is connected to: ";
+      for (int neighbor : current->Neighbors)
+        cout << neighbor << " ";
+      cout << endl;
+      current = current->next;
+    }
+  }
 };
 
 int main()
 {
+  Graph graph;
+  graph.insertVertex(1);
+  graph.insertVertex(2);
+  graph.insertVertex(3);
+  graph.insertEdge(1, 2);
+  graph.insertEdge(2, 3);
+  graph.display();
+
   return 0;
 }
