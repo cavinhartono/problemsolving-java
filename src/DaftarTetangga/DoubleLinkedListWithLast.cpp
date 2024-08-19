@@ -53,7 +53,7 @@ public:
     while (current)
     {
       cout << "Vertex " << current->vertex << " is connection to: ";
-      for (int neighbor : Neighbors)
+      for (int neighbor : current->Neighbors)
       {
         cout << neighbor << " ";
       }
