@@ -37,6 +37,30 @@ public:
     }
     vertexMap[v] = newNode;
   }
+
+  void insertEdge(int v, int w)
+  {
+    if (vertexMap.find(v) != vertexMap.end() && vertexMap.find(w) != vertexMap.end())
+    {
+      vertexMap[v]->Neighbors.push_back(w);
+      vertexMap[w]->Neighbors.push_back(v);
+    }
+  }
+
+  void display()
+  {
+    Node *current = head;
+    while (current)
+    {
+      cout << "Vertex " << current->vertex << " is connection to: ";
+      for (int neighbor : Neighbors)
+      {
+        cout << neighbor << " ";
+      }
+      cout << endl;
+      current = current->next;
+    }
+  }
 };
 
 int main()
@@ -46,6 +70,11 @@ int main()
   graph.insertVertex(1);
   graph.insertVertex(2);
   graph.insertVertex(3);
-  
+
+  graph.insertEdge(1, 2);
+  graph.insertEdge(2, 3);
+
+  graph.display();
+
   return 0;
 }
