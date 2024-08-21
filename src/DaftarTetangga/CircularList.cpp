@@ -49,6 +49,10 @@ public:
     }
   }
 
+  void deleteVertex(int v)
+  {
+  }
+
   void deleteEdge(int v, int w)
   {
     if (vertexMap.find(v) != vertexMap.end() && vertexMap.find(w) != vertexMap.end())
