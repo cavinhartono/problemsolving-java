@@ -55,6 +55,44 @@ public:
     }
   }
 
+  void deleteVertex(int v)
+  {
+    if (vertexMap.find(v) == vertexMap.end())
+    {
+      return;
+    }
+
+    Node *node = vertexMap[v];
+
+    for (int neighbor : node->Neighbors)
+    {
+      vertexMap[neighbor]->Neighbors.remove(v);
+    }
+
+    if (node->prev)
+    {
+      node->prev->next = node->next;
+    }
+
+    if (node->next)
+    {
+      node->next->prev = node->prev;
+    }
+
+    if (node == head)
+    {
+      head = node->next;
+    }
+
+    if (node == tail)
+    {
+      tail = node->prev;
+    }
+
+    delete node;
+    vertexMap.erase(v);
+  }
+
   void display()
   {
     Node *current = head;
@@ -77,6 +115,14 @@ int main()
   graph.insertVertex(3);
   graph.insertEdge(1, 2);
   graph.insertEdge(2, 3);
+  graph.display();
+
+  // cout << "jika 1 dan 3 dihapus" << endl;
+  // graph.deleteEdge(1, 2);
+  // graph.display();
+
+  cout << "jika vertex 2 dihapus" << endl;
+  graph.deleteVertex(2);
   graph.display();
 
   return 0;

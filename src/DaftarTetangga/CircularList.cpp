@@ -51,6 +51,52 @@ public:
 
   void deleteVertex(int v)
   {
+    if (vertexMap.find(v) == vertexMap.end())
+    {
+      return;
+    }
+
+    Node *node = vertexMap[v];
+    Node *temp = head;
+
+    while (temp->next != node)
+    {
+      temp = temp->next;
+    }
+
+    if (node == head && head->next == head)
+    {
+      delete head;
+      head = nullptr;
+    }
+    else
+    {
+      temp->next = node->next;
+
+      /* Mengecek apakah `head` cuman satu? */
+      if (node == head)
+      {
+        head = node->next;
+      }
+      else
+      {
+        temp->next = node->next;
+
+        if (node == head)
+        {
+          head = node->next;
+        }
+
+        delete node;
+      }
+    }
+
+    for (int neighbor : vertexMap[v]->Neighbors)
+    {
+      vertexMap[neighbor]->Neighbors.remove(v);
+    }
+
+    vertexMap.erase(v);
   }
 
   void deleteEdge(int v, int w)
@@ -95,6 +141,9 @@ int main()
   graph.insertEdge(2, 3);
 
   cout << endl;
+  graph.display();
+
+  graph.deleteVertex(2);
   graph.display();
 
   return 0;
