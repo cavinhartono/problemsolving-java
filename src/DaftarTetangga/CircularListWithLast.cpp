@@ -70,5 +70,18 @@ public:
 
 int main()
 {
+  Graph graph;
+
+  graph.insertVertex(1);
+  graph.insertVertex(2);
+  graph.insertVertex(3);
+  graph.insertVertex(4);
+
+  graph.insertEdge(1, 2);
+  graph.insertEdge(2, 3);
+  graph.insertEdge(3, 4);
+
+  cout << endl;
+  graph.display();
   return 0;
 }
