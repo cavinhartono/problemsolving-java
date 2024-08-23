@@ -47,6 +47,60 @@ public:
     }
   }
 
+  void deleteVertex(int v)
+  {
+    if (vertexMap.find(v) == vertexMap.end())
+    {
+      return;
+    }
+
+    Node *node = vertexMap[v];
+    Node *temp = head;
+
+    while (temp->next != node)
+    {
+      temp = temp->next;
+    }
+
+    if (node == head && head->next == head)
+    {
+      delete head;
+      head = last = nullptr;
+    }
+    else
+    {
+      temp->next = node->next;
+
+      if (node == head)
+      {
+        head = node->next;
+        last->next = head;
+      }
+
+      if (node == last)
+      {
+        last = temp;
+      }
+      delete node;
+    }
+
+    for (int neighbor : vertexMap[v]->Neighbors)
+    {
+      vertexMap[neighbor]->Neighbors.remove(v);
+    }
+
+    vertexMap.erase(v);
+  }
+
+  void deleteEdge(int v, int w)
+  {
+    if (vertexMap.find(v) != vertexMap.end() && vertexMap.find(w) != vertexMap.end())
+    {
+      vertexMap[v]->Neighbors.remove(w);
+      vertexMap[w]->Neighbors.remove(v);
+    }
+  }
+
   void display()
   {
     if (!head)
@@ -83,5 +137,16 @@ int main()
 
   cout << endl;
   graph.display();
+
+  cout << "jika nomor vertex ke-3 dihapus..." << endl;
+  graph.deleteVertex(3);
+  cout << endl;
+  graph.display();
+
+  cout << "jika bagian 1 dan 3 dihapus..." << endl;
+  graph.deleteEdge(1, 3);
+  cout << endl;
+  graph.display();
+
   return 0;
 }
